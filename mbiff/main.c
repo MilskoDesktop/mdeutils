@@ -51,14 +51,16 @@ int main() {
 
 	MwLibraryInit();
 
-	window = MwVaCreateWidget(MwWindowClass, "main", NULL, MwDEFAULT, MwDEFAULT, 96, 96,
+	window = MwVaCreateWidget(MwWindowClass, "main", NULL, MwDEFAULT, MwDEFAULT, 128, 128,
 		MwNtitle, "mbiff",
 	NULL);
 
-	empty = MwLoadXPM(window, mailempty);
-	full = MwLoadXPM(window, mailfull);
+	empty = MwLoadImage(window, DATADIR "/mde/icons/mailempty.png");
+	full = MwLoadImage(window, DATADIR "/mde/icons/mailfull.png");
+	if(empty == NULL) empty = MwLoadXPM(window, mailempty);
+	if(full == NULL) full = MwLoadXPM(window, mailfull);
 
-	image = MwVaCreateWidget(MwImageClass, "image", window, 0, 0, 96, 96,
+	image = MwVaCreateWidget(MwImageClass, "image", window, 0, 0, 128, 128,
 		MwNpixmap, empty,
 	NULL);
 
