@@ -21,7 +21,7 @@
 #endif
 
 #ifndef _PATH_MAILDIR
-#define _PATH_MAILDIR "/var/mail"
+#define _PATH_MAILDIR "/var/spool/mail"
 #endif
 
 /* main.c */

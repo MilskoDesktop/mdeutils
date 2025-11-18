@@ -24,6 +24,7 @@ static void resize(MwWidget handle, void* user, void* client){
 }
 
 static void tick(MwWidget handle, void* user, void* client){
+	(void)handle;
 	(void)user;
 	(void)client;
 
@@ -35,22 +36,33 @@ static void tick(MwWidget handle, void* user, void* client){
 	}
 }
 
+static void mouseUp(MwWidget handle, void* user, void* client){
+	(void)handle;
+	(void)user;
+	(void)client;
+
+	MwVaApply(image,
+		MwNpixmap, empty,
+	NULL);
+}
+
 int main() {
 	init_mail();
 
 	MwLibraryInit();
 
-	window = MwVaCreateWidget(MwWindowClass, "main", NULL, MwDEFAULT, MwDEFAULT, 48, 48,
+	window = MwVaCreateWidget(MwWindowClass, "main", NULL, MwDEFAULT, MwDEFAULT, 96, 96,
 		MwNtitle, "mbiff",
 	NULL);
 
 	empty = MwLoadXPM(window, mailempty);
 	full = MwLoadXPM(window, mailfull);
 
-	image = MwVaCreateWidget(MwImageClass, "image", window, 0, 0, 48, 48,
+	image = MwVaCreateWidget(MwImageClass, "image", window, 0, 0, 96, 96,
 		MwNpixmap, empty,
 	NULL);
 
+	MwAddUserHandler(image, MwNmouseUpHandler, mouseUp, NULL);
 	MwAddUserHandler(window, MwNtickHandler, tick, NULL);
 	MwAddUserHandler(window, MwNresizeHandler, resize, NULL);
 

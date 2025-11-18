@@ -22,9 +22,12 @@ void init_mail(void){
 
 void check_mail(void){
 	struct stat s;
-	if(stat(mailpath, &s) == 0){
-		if(s.st_mtime > last){
-			printf("!\n");
+	s.st_mtime = 0;
+	if(stat(mailpath, &s) == 0 || last != 0){
+		if((s.st_mtime == 0 && last != 0) || s.st_mtime > last){
+			MwVaApply(image,
+				MwNpixmap, full,
+			NULL);
 		}
 
 		last = s.st_mtime;
