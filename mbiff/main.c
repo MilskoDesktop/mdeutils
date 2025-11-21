@@ -41,6 +41,9 @@ static void mouseUp(MwWidget handle, void* user, void* client){
 	(void)user;
 	(void)client;
 
+	MwVaApply(window,
+			MwNiconPixmap, empty,
+	NULL);
 	MwVaApply(image,
 		MwNpixmap, empty,
 	NULL);
@@ -59,6 +62,8 @@ int main() {
 	full = MwLoadImage(window, DATADIR "/mde/icons/128x128/mailfull.png");
 	if(empty == NULL) empty = MwLoadXPM(window, mailempty);
 	if(full == NULL) full = MwLoadXPM(window, mailfull);
+
+	MwVaApply(window, MwNiconPixmap, empty, NULL);
 
 	image = MwVaCreateWidget(MwImageClass, "image", window, 0, 0, 128, 128,
 		MwNpixmap, empty,
