@@ -55,8 +55,8 @@ int main() {
 		MwNtitle, "mbiff",
 	NULL);
 
-	empty = MwLoadImage(window, DATADIR "/mde/icons/mailempty.png");
-	full = MwLoadImage(window, DATADIR "/mde/icons/mailfull.png");
+	empty = MwLoadImage(window, DATADIR "/mde/icons/128x128/mailempty.png");
+	full = MwLoadImage(window, DATADIR "/mde/icons/128x128/mailfull.png");
 	if(empty == NULL) empty = MwLoadXPM(window, mailempty);
 	if(full == NULL) full = MwLoadXPM(window, mailfull);
 
