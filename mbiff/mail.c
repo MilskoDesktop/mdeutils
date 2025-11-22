@@ -28,9 +28,6 @@ void check_mail(void){
 			MwVaApply(image,
 				MwNpixmap, full,
 			NULL);
-			MwVaApply(window,
-				MwNiconPixmap, full,
-			NULL);
 		}
 
 		last = s.st_mtime;

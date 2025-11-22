@@ -3,7 +3,7 @@
 #include "mailempty.xpm"
 #include "mailfull.xpm"
 
-MwWidget window, image;
+MwWidget window, image, mail;
 MwLLPixmap empty, full;
 static int waiting = 0;
 
@@ -41,9 +41,6 @@ static void mouseUp(MwWidget handle, void* user, void* client){
 	(void)user;
 	(void)client;
 
-	MwVaApply(window,
-			MwNiconPixmap, empty,
-	NULL);
 	MwVaApply(image,
 		MwNpixmap, empty,
 	NULL);
@@ -60,10 +57,12 @@ int main() {
 
 	empty = MwLoadImage(window, DATADIR "/mde/icons/128x128/mailempty.png");
 	full = MwLoadImage(window, DATADIR "/mde/icons/128x128/mailfull.png");
+	mail = MwLoadImage(window, DATADIR "/mde/icons/128x128/mail.png");
 	if(empty == NULL) empty = MwLoadXPM(window, mailempty);
 	if(full == NULL) full = MwLoadXPM(window, mailfull);
+	if(mail == NULL) mail = MwLoadXPM(window, mailempty);
 
-	MwVaApply(window, MwNiconPixmap, empty, NULL);
+	MwVaApply(window, MwNiconPixmap, mail, NULL);
 
 	image = MwVaCreateWidget(MwImageClass, "image", window, 0, 0, 128, 128,
 		MwNpixmap, empty,
