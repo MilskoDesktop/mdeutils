@@ -25,7 +25,7 @@
 #endif
 
 /* main.c */
-extern MwWidget window, image;
+extern MwWidget	  window, image;
 extern MwLLPixmap empty, full;
 
 /* mail.c */

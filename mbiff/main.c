@@ -3,47 +3,47 @@
 #include "mailempty.xpm"
 #include "mailfull.xpm"
 
-MwWidget window, image, mail;
+MwWidget   window, image, mail;
 MwLLPixmap empty, full;
 static int waiting = 0;
 
-static void resize(MwWidget handle, void* user, void* client){
-	int w = MwGetInteger(handle, MwNwidth);
-	int h = MwGetInteger(handle, MwNheight);
+static void resize(MwWidget handle, void* user, void* client) {
+	int w  = MwGetInteger(handle, MwNwidth);
+	int h  = MwGetInteger(handle, MwNheight);
 	int iw = w < h ? w : h;
 
 	(void)user;
 	(void)client;
 
 	MwVaApply(image,
-		MwNx, (w - iw) / 2,
-		MwNy, (h - iw) / 2,
-		MwNwidth, iw,
-		MwNheight, iw,
-	NULL);
+		  MwNx, (w - iw) / 2,
+		  MwNy, (h - iw) / 2,
+		  MwNwidth, iw,
+		  MwNheight, iw,
+		  NULL);
 }
 
-static void tick(MwWidget handle, void* user, void* client){
+static void tick(MwWidget handle, void* user, void* client) {
 	(void)handle;
 	(void)user;
 	(void)client;
 
 	waiting += MwWaitMS;
-	if(waiting >= 1000){
+	if(waiting >= 1000) {
 		check_mail();
 
 		waiting = 0;
 	}
 }
 
-static void mouseUp(MwWidget handle, void* user, void* client){
+static void mouseUp(MwWidget handle, void* user, void* client) {
 	(void)handle;
 	(void)user;
 	(void)client;
 
 	MwVaApply(image,
-		MwNpixmap, empty,
-	NULL);
+		  MwNpixmap, empty,
+		  NULL);
 }
 
 int main() {
@@ -52,12 +52,12 @@ int main() {
 	MwLibraryInit();
 
 	window = MwVaCreateWidget(MwWindowClass, "main", NULL, MwDEFAULT, MwDEFAULT, 128, 128,
-		MwNtitle, "mbiff",
-	NULL);
+				  MwNtitle, "mbiff",
+				  NULL);
 
 	empty = MwLoadImage(window, DATADIR "/mde/icons/128x128/mailempty.png");
-	full = MwLoadImage(window, DATADIR "/mde/icons/128x128/mailfull.png");
-	mail = MwLoadImage(window, DATADIR "/mde/icons/128x128/mail.png");
+	full  = MwLoadImage(window, DATADIR "/mde/icons/128x128/mailfull.png");
+	mail  = MwLoadImage(window, DATADIR "/mde/icons/128x128/mail.png");
 	if(empty == NULL) empty = MwLoadXPM(window, mailempty);
 	if(full == NULL) full = MwLoadXPM(window, mailfull);
 	if(mail == NULL) mail = MwLoadXPM(window, mailempty);
@@ -65,8 +65,8 @@ int main() {
 	MwVaApply(window, MwNiconPixmap, mail, NULL);
 
 	image = MwVaCreateWidget(MwImageClass, "image", window, 0, 0, 128, 128,
-		MwNpixmap, empty,
-	NULL);
+				 MwNpixmap, empty,
+				 NULL);
 
 	MwAddUserHandler(image, MwNmouseUpHandler, mouseUp, NULL);
 	MwAddUserHandler(window, MwNtickHandler, tick, NULL);

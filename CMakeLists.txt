@@ -4,3 +4,4 @@ project(
 )
 
 add_subdirectory(mbiff)
+add_subdirectory(mauplay)
