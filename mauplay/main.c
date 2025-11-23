@@ -201,16 +201,17 @@ int main() {
 				     MwNorientation, MwHORIZONTAL,
 				     NULL);
 	eltime	  = MwVaCreateWidget(MwLabelClass, "eltime", window, 0, 0, 0, 0,
-				     MwNalignment, MwALIGNMENT_BEGINNING,
-				     MwNtext, "00:00",
+				     MwNalignment, MwALIGNMENT_END,
+				     MwNtext, "0:00",
 				     NULL);
 	seekbar	  = MwVaCreateWidget(MwScrollBarClass, "seekbar", window, 0, 0, 0, 0,
 				     MwNorientation, MwHORIZONTAL,
 				     MwNareaShown, 15,
+				     MwNshowArrows, 0,
 				     NULL);
 	rmtime	  = MwVaCreateWidget(MwLabelClass, "rmtime", window, 0, 0, 0, 0,
-				     MwNalignment, MwALIGNMENT_BEGINNING,
-				     MwNtext, "00:00",
+				     MwNalignment, MwALIGNMENT_END,
+				     MwNtext, "0:00",
 				     NULL);
 	tree	  = MwCreateWidget(MwTreeViewClass, "tree", window, 0, 0, 0, 0);
 	list	  = MwVaCreateWidget(MwListBoxClass, "list", window, 0, 0, 0, 0,
@@ -251,7 +252,11 @@ int main() {
 	ui_init();
 
 	db_add("test.mp3");
+	db_add("test2.mp3");
 	db_scan();
+
+	audio_init();
+	audio_queue("test2.mp3");
 
 	MwLoop(window);
 }
