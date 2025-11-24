@@ -3,18 +3,18 @@
 #include <samplerate.h>
 #include <stb_ds.h>
 
-static void*	audio;
+static MDEAudio audio;
 pthread_mutex_t audio_mutex;
 queue_t*	queue	   = NULL;
 int		queue_seek = -1;
 int		paused	   = 0;
 
-static void handler(void* handle, void* user, void* data, int frames) {
+static void handler(MDEAudio handle, void* user, void* data, int frames) {
 	memset(data, 0, frames * 2 * 2);
 
 	pthread_mutex_lock(&audio_mutex);
 	if(queue_seek != -1 && !paused) {
-		int	 from_frames = frames * queue[queue_seek].sfi.samplerate / MDEAudioRate;
+		int	 from_frames = frames * queue[queue_seek].sound->context->sample_rate / MDEAudioRate;
 		float*	 from	     = malloc(from_frames * sizeof(*from) * 2);
 		float*	 to	     = malloc(frames * sizeof(*to) * 2);
 		SRC_DATA d;
@@ -24,9 +24,9 @@ static void handler(void* handle, void* user, void* data, int frames) {
 		d.data_out	= to;
 		d.input_frames	= from_frames;
 		d.output_frames = frames;
-		d.src_ratio	= (double)MDEAudioRate / queue[queue_seek].sfi.samplerate;
+		d.src_ratio	= (double)MDEAudioRate / queue[queue_seek].sound->context->sample_rate;
 
-		f = sf_readf_float(queue[queue_seek].sf, from, from_frames);
+		f = MDESoundReadFloat(queue[queue_seek].sound, from, from_frames);
 		src_simple(&d, SRC_SINC_BEST_QUALITY, 2);
 		src_float_to_short_array(to, data, frames * 2);
 		queue[queue_seek].frames += f;
@@ -55,7 +55,7 @@ void audio_init(void) {
 void audio_queue(const char* path) {
 	queue_t q;
 	q.path	 = MDEFileAbsolutePath(path);
-	q.sf	 = sf_open(q.path, SFM_READ, &q.sfi);
+	q.sound	 = MDESoundOpen(q.path);
 	q.frames = 0;
 
 	pthread_mutex_lock(&audio_mutex);

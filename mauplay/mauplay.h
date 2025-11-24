@@ -8,7 +8,6 @@
 #include <Mw/Milsko.h>
 
 /* External */
-#include <sndfile.h>
 
 /* Standard */
 #include <sys/stat.h>
@@ -31,8 +30,7 @@ typedef struct numkv {
 
 typedef struct queue {
 	char*	 path;
-	SNDFILE* sf;
-	SF_INFO	 sfi;
+	MDESound sound;
 	int	 frames;
 } queue_t;
 

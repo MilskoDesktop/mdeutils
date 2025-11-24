@@ -61,8 +61,7 @@ int db_init(void) {
 }
 
 static int db_bind(sqlite3_stmt* stmt, const char* path) {
-	SF_INFO	    sfi;
-	SNDFILE*    sf = sf_open(path, SFM_READ, &sfi);
+	MDESound    sound = MDESoundOpen(path);
 	char*	    p;
 	const char* s_title;
 	const char* s_artist;
@@ -70,13 +69,13 @@ static int db_bind(sqlite3_stmt* stmt, const char* path) {
 	const char* s_genre;
 	int	    s_length;
 	struct stat s;
-	if(sf == NULL) return 1;
+	if(sound == NULL) return 1;
 
-	s_title	 = sf_get_string(sf, SF_STR_TITLE);
-	s_artist = sf_get_string(sf, SF_STR_ARTIST);
-	s_album	 = sf_get_string(sf, SF_STR_ALBUM);
-	s_genre	 = sf_get_string(sf, SF_STR_GENRE);
-	s_length = sfi.frames / sfi.samplerate;
+	s_title	 = sound->context->title;
+	s_artist = sound->context->artist;
+	s_album	 = sound->context->album;
+	s_genre	 = sound->context->genre;
+	s_length = sound->context->frames / sound->context->sample_rate;
 
 	if(s_title == NULL) s_title = path;
 	if(s_artist == NULL) s_artist = "<unknown>";
@@ -95,7 +94,7 @@ static int db_bind(sqlite3_stmt* stmt, const char* path) {
 	sqlite3_bind_int(stmt, 6, s_length);
 	sqlite3_bind_int64(stmt, 7, s.st_mtime);
 
-	sf_close(sf);
+	MDESoundClose(sound);
 
 	free(p);
 

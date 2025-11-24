@@ -190,7 +190,7 @@ static void list_activate(MwWidget handle, void* user, void* client) {
 		pthread_mutex_lock(&audio_mutex);
 		queue_seek		 = (*(int*)client) - 1;
 		queue[queue_seek].frames = 0;
-		sf_seek(queue[queue_seek].sf, 0, SEEK_SET);
+		MDESoundSeek(queue[queue_seek].sound, 0);
 		pthread_mutex_unlock(&audio_mutex);
 	} else if(ui_last == all_music) {
 		audio_queue(db_musics[(*(int*)client) - 1].key);
@@ -223,7 +223,7 @@ static void window_tick(MwWidget handle, void* user, void* client) {
 			  MwNtext, buf,
 			  NULL);
 		MwVaApply(seekbar,
-			  MwNmaxValue, queue[queue_seek].sfi.frames / queue[queue_seek].sfi.samplerate,
+			  MwNmaxValue, queue[queue_seek].sound->context->frames / queue[queue_seek].sound->context->sample_rate,
 			  NULL);
 
 		free(buf);
@@ -233,8 +233,8 @@ static void window_tick(MwWidget handle, void* user, void* client) {
 			  NULL);
 	}
 	if(arrlen(queue) > 0 && queue_seek != -1) {
-		int  elsec = queue[queue_seek].frames / queue[queue_seek].sfi.samplerate;
-		int  rmsec = (queue[queue_seek].sfi.frames / queue[queue_seek].sfi.samplerate) - elsec;
+		int  elsec = queue[queue_seek].frames / queue[queue_seek].sound->context->sample_rate;
+		int  rmsec = (queue[queue_seek].sound->context->frames / queue[queue_seek].sound->context->sample_rate) - elsec;
 		char buf[64];
 
 		sprintf(buf, "%d:%02d", elsec / 60, elsec % 60);
@@ -248,7 +248,7 @@ static void window_tick(MwWidget handle, void* user, void* client) {
 			  NULL);
 
 		if(changed) {
-			sf_seek(queue[queue_seek].sf, (queue[queue_seek].frames = MwGetInteger(seekbar, MwNvalue) * queue[queue_seek].sfi.samplerate), SEEK_SET);
+			MDESoundSeek(queue[queue_seek].sound, (queue[queue_seek].frames = MwGetInteger(seekbar, MwNvalue) * queue[queue_seek].sound->context->sample_rate));
 			changed = 0;
 		} else {
 			MwVaApply(seekbar,
@@ -280,7 +280,7 @@ static void bskipback_activate(MwWidget handle, void* user, void* client) {
 	}
 	if(arrlen(queue) > 0) {
 		queue[queue_seek].frames = 0;
-		sf_seek(queue[queue_seek].sf, 0, SEEK_SET);
+		MDESoundSeek(queue[queue_seek].sound, 0);
 	} else {
 		queue_seek = -1;
 	}
@@ -303,7 +303,7 @@ static void bstop_activate(MwWidget handle, void* user, void* client) {
 	pthread_mutex_lock(&audio_mutex);
 	if(queue_seek != -1) {
 		queue[queue_seek].frames = 0;
-		sf_seek(queue[queue_seek].sf, 0, SEEK_SET);
+		MDESoundSeek(queue[queue_seek].sound, 0);
 	}
 	queue_seek = -1;
 	pthread_mutex_unlock(&audio_mutex);
@@ -318,7 +318,7 @@ static void bskipfwd_activate(MwWidget handle, void* user, void* client) {
 	}
 	if(arrlen(queue) > 0) {
 		queue[queue_seek].frames = 0;
-		sf_seek(queue[queue_seek].sf, 0, SEEK_SET);
+		MDESoundSeek(queue[queue_seek].sound, 0);
 	} else {
 		queue_seek = -1;
 	}
