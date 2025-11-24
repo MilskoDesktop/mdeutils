@@ -16,7 +16,7 @@ MwWidget       mainsep;
 MwWidget       seekbar;
 MwWidget       tree, list;
 MwLLPixmap     pxalbum, pxskipback, pxplay, pxpause, pxstop, pxskipfwd, pxrepeat, pxrepeatsong, pxshuffle;
-MwLLPixmap     pxoptical, pxfoldermusic, pxgenre, pxartist;
+MwLLPixmap     pxoptical, pxfoldermusic, pxgenre, pxartist, pxradio;
 unsigned char* pxalbumdata;
 
 static void resize(MwWidget handle, void* user, void* client) {
@@ -240,6 +240,7 @@ int main() {
 	pxfoldermusic = MwLoadImage(window, ICON16DIR "/folder-music.png");
 	pxartist      = MwLoadImage(window, ICON16DIR "/artist.png");
 	pxgenre	      = MwLoadImage(window, ICON16DIR "/genre.png");
+	pxradio	      = MwLoadImage(window, ICON128DIR "/radio.png");
 
 	MwSetVoid(album, MwNpixmap, pxalbum);
 

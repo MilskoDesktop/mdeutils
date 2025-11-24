@@ -1,6 +1,8 @@
 #ifndef __MAUPLAY_H__
 #define __MAUPLAY_H__
 
+#define VERSION "1.0"
+
 #include "config.h"
 
 /* Milsko */
@@ -44,7 +46,7 @@ extern MwWidget	      seekbar;
 extern MwWidget	      tree, list;
 extern unsigned char* pxalbumdata;
 extern MwLLPixmap     pxalbum, pxrepeat, pxrepeatsong;
-extern MwLLPixmap     pxoptical, pxfoldermusic, pxartist, pxgenre;
+extern MwLLPixmap     pxoptical, pxfoldermusic, pxartist, pxgenre, pxradio;
 
 /* db.c */
 extern numkv_t* db_musics;

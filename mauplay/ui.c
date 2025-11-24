@@ -15,6 +15,8 @@ static void* file_add_file;
 static void* file_add_directory;
 static void* file_add_playlist;
 
+static void* help_about;
+
 void ui_list_reset(const char* merge) {
 	void* p;
 
@@ -457,6 +459,8 @@ static void menu_menu(MwWidget handle, void* user, void* client) {
 	} else if(client == file_add_playlist) {
 		MwWidget fc = MwFileChooser(window, "Choose a playlist to add");
 		MwAddUserHandler(fc, MwNfileChosenHandler, playlist_fc_chosen, NULL);
+	}else if(client == help_about){
+		MDEAboutDialog(window, "mauplay", VERSION, pxradio);
 	}
 }
 
@@ -495,7 +499,7 @@ void ui_init(void) {
 	file_add_playlist  = MwMenuAdd(menu, m, "Add Playlist");
 
 	m = MwMenuAdd(menu, NULL, "?Help");
-	MwMenuAdd(menu, m, "About");
+	help_about = MwMenuAdd(menu, m, "About");
 
 	ui_list_reset(NULL);
 	ui_tree_reset();
