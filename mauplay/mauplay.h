@@ -70,8 +70,13 @@ void ui_set_genres(int v);
 /* audio.c */
 extern pthread_mutex_t audio_mutex;
 extern queue_t*	       queue;
+extern int	       queue_seek;
+extern int	       paused;
 
 void audio_init(void);
 void audio_queue(const char* path);
+
+/* id3.c */
+unsigned char* id3_findimage(const char* path, size_t* size);
 
 #endif

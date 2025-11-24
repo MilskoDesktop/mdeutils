@@ -256,7 +256,6 @@ int main() {
 	db_scan();
 
 	audio_init();
-	audio_queue("test2.mp3");
 
 	MwLoop(window);
 }
