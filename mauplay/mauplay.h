@@ -1,7 +1,7 @@
 #ifndef __MAUPLAY_H__
 #define __MAUPLAY_H__
 
-#define VERSION "1.0"
+#define VERSION "0.0.0"
 
 #include "config.h"
 
