@@ -139,14 +139,14 @@ static void resize(MwWidget handle, void* user, void* client) {
 	MwVaApply(tree,
 		  MwNx, 5,
 		  MwNy, y + 5 + 32 + 10 + 16 + 5,
-		  MwNwidth, 128 + 16,
+		  MwNwidth, 128 + 32,
 		  MwNheight, wh - 5 - 32 - 10 - 16 - 5 - 5,
 		  NULL);
 
 	MwVaApply(list,
-		  MwNx, 5 + 128 + 16 + 5,
+		  MwNx, 5 + 128 + 32 + 5,
 		  MwNy, y + 5 + 32 + 10 + 16 + 5,
-		  MwNwidth, ww - 5 - 128 - 16 - 5 - 5,
+		  MwNwidth, ww - 5 - 128 - 32 - 5 - 5,
 		  MwNheight, wh - 5 - 32 - 10 - 16 - 5 - 5,
 		  NULL);
 }
