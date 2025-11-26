@@ -64,6 +64,11 @@ void audio_queue(const char* path) {
 	q.sound	 = MDESoundOpen(q.path);
 	q.frames = 0;
 
+	if(q.sound == NULL) {
+		free(q.path);
+		return;
+	}
+
 	MDEMutexLock(audio_mutex);
 	arrput(queue, q);
 	if(queue_seek == -1) queue_seek = arrlen(queue) - 1;
