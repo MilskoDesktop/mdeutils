@@ -42,8 +42,8 @@ void ui_list_reset(const char* merge) {
 		MwListBoxSetWidth(list, 1, -48 - 64);
 		MwListBoxSetWidth(list, 2, 64);
 	} else {
-		MwListBoxSetWidth(list, 1, -48 - 128);
-		MwListBoxSetWidth(list, 2, 64);
+		MwListBoxSetWidth(list, 1, -48 - 96 - 64);
+		MwListBoxSetWidth(list, 2, 96);
 		MwListBoxSetWidth(list, 3, 64);
 	}
 
