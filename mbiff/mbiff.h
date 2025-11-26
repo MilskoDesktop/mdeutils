@@ -1,6 +1,8 @@
 #ifndef __MBIFF_H__
 #define __MBIFF_H__
 
+#define VERSION "0.0.0"
+
 #include "config.h"
 
 /* Milsko */

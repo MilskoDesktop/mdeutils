@@ -449,6 +449,19 @@ static void file_fc_chosen(MwWidget handle, void* user, void* client) {
 	db_scan();
 }
 
+static void file_dc_scan(const char* path, int dir, int symlink, void* uesr) {
+	if(dir) {
+		MDEDirectoryScan(path, file_dc_scan, NULL);
+	} else {
+		db_add(path);
+	}
+}
+
+static void file_dc_chosen(MwWidget handle, void* user, void* client) {
+	MDEDirectoryScan(client, file_dc_scan, NULL);
+	db_scan();
+}
+
 static void playlist_fc_chosen(MwWidget handle, void* user, void* client) {
 	playlist_add(client);
 }
@@ -457,6 +470,9 @@ static void menu_menu(MwWidget handle, void* user, void* client) {
 	if(client == file_add_file) {
 		MwWidget fc = MwFileChooser(window, "Choose a file to add");
 		MwAddUserHandler(fc, MwNfileChosenHandler, file_fc_chosen, NULL);
+	} else if(client == file_add_directory) {
+		MwWidget dc = MwDirectoryChooser(window, "Choose a directory to add");
+		MwAddUserHandler(dc, MwNdirectoryChosenHandler, file_dc_chosen, NULL);
 	} else if(client == file_add_playlist) {
 		MwWidget fc = MwFileChooser(window, "Choose a playlist to add");
 		MwAddUserHandler(fc, MwNfileChosenHandler, playlist_fc_chosen, NULL);
