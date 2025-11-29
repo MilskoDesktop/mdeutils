@@ -70,6 +70,7 @@ static int db_bind(sqlite3_stmt* stmt, const char* path) {
 	const char* s_genre;
 	int	    s_length;
 	int	    s_track = 0;
+	char*	    str;
 	struct stat s;
 	if(sound == NULL) return 1;
 
@@ -80,7 +81,11 @@ static int db_bind(sqlite3_stmt* stmt, const char* path) {
 	s_track	 = sound->context->track;
 	s_length = sound->context->frames / sound->context->sample_rate;
 
-	if(s_title == NULL) s_title = path;
+#ifdef _WIN32
+	if(s_title == NULL) s_title = (str = strrchr(path, '\\')) != NULL ? (str + 1) : path;
+#else
+	if(s_title == NULL) s_title = (str = strrchr(path, '/')) != NULL ? (str + 1) : path;
+#endif
 	if(s_artist == NULL) s_artist = "<unknown>";
 	if(s_album == NULL) s_album = "<unknown>";
 	if(s_genre == NULL) s_genre = "<unknown>";

@@ -6,3 +6,4 @@ project(
 add_subdirectory(mbiff)
 add_subdirectory(mauplay)
 add_subdirectory(mcompass)
+add_subdirectory(mclock)
