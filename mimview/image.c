@@ -91,13 +91,14 @@ void image_render(void) {
 			  MwNtitle, str,
 			  NULL);
 
-		for(y = (oy < 0 ? 0 : 0); y < h + (oy < 0 ? -oy : 0); y++) {
-			for(x = (ox < 0 ? 0 : 0); x < w + (ox < 0 ? -ox : 0); x++) {
+		for(y = (oy < 0 ? 0 : 0); y < h + (oy < 0 ? -oy : -oy * 2); y++) {
+			for(x = (ox < 0 ? 0 : 0); x < w + (ox < 0 ? -ox : -ox * 2); x++) {
 				if(0 <= (y + oy) && (y + oy) < h && 0 <= (x + ox) && (x + ox) < w) {
 					int	       ix = x * images[current].scale;
 					int	       iy = y * images[current].scale;
 					unsigned char* opx;
 					unsigned char* ipx;
+
 					if(0 <= iy && iy < images[current].height && 0 <= ix && ix < images[current].width) {
 						int i;
 						opx = &d[((y + oy) * w + x + ox) * 4];
